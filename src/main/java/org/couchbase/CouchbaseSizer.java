@@ -101,6 +101,7 @@ public class CouchbaseSizer extends JFrame {
 
         // New button for calculating additional nodes
         JButton calculateButton = new JButton("Calculate Additional Nodes");
+        calculateButton.setFont(new Font("Arial", Font.PLAIN, 14)); // Set the font to Arial Bold
         calculateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
