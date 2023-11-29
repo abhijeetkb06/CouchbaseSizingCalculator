@@ -93,7 +93,7 @@ public class CouchbaseSizer extends JFrame {
         add(calculateButton);
 
         // New button for clearing fields
-        clearButton = new JButton("Clear Fields");
+        clearButton = new JButton("Clear");
         clearButton.setBorder(BorderFactory.createRaisedBevelBorder());
         clearButton.setBackground(Color.lightGray); // Set the background color to red
         clearButton.setOpaque(true); // Needed for MacOS
