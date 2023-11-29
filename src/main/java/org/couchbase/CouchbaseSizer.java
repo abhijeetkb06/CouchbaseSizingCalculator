@@ -30,19 +30,19 @@ public class CouchbaseSizer extends JFrame {
 
         add(new JLabel("Currently Used RAM per Node (GB):"));
         currentlyUsedRamPerNodeField = new JTextField("236");
-        currentlyUsedRamPerNodeField.setEditable(false); // Make it non-editable
+        currentlyUsedRamPerNodeField.setEditable(true); // Make it non-editable
         currentlyUsedRamPerNodeField.setColumns(10);
         add(currentlyUsedRamPerNodeField);
 
         add(new JLabel("RAM Allocated per Node (GB):"));
         ramAllocatedPerNodeField = new JTextField("256");
-        ramAllocatedPerNodeField.setEditable(false); // Make it non-editable
+        ramAllocatedPerNodeField.setEditable(true); // Make it non-editable
         ramAllocatedPerNodeField.setColumns(10);
         add(ramAllocatedPerNodeField);
 
         add(new JLabel("Total Nodes:"));
         totalNodesField = new JTextField("36");
-        totalNodesField.setEditable(false); // Make it non-editable
+        totalNodesField.setEditable(true); // Make it non-editable
         totalNodesField.setColumns(10);
         add(totalNodesField);
 
