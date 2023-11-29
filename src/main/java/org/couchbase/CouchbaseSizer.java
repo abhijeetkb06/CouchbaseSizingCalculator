@@ -24,7 +24,7 @@ public class CouchbaseSizer extends JFrame {
 //        setLayout(new GridLayout(9, 6, 15, 20)); // Added horizontal and vertical gaps
 //        setLayout(new FlowLayout((FlowLayout.TRAILING))); // Added horizontal and vertical gaps
 
-        setSize(800, 350); // Adjust the size as needed
+        setSize(600, 700); // Adjust the size as needed
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS)); // Changed to BoxLayout
 
@@ -47,15 +47,30 @@ public class CouchbaseSizer extends JFrame {
         totalNodesField.setEditable(true); // Make it non-editable
         totalNodesField.setColumns(10);
         add(totalNodesField);
-
-        add(new JLabel("RAM Usage (%):"));
+/////////////
+   /*     add(new JLabel("RAM Usage (%):"));
         ramUsageSlider = new JSlider(0, 100, 90);
         ramUsageSlider.addChangeListener(e -> calculateRamUsage());
         add(ramUsageSlider);
 
         ramUsageLabel = new JLabel("90%");
-        add(ramUsageLabel);
+        add(ramUsageLabel);*/
+
+
+        // Create a new panel with BorderLayout
+        JPanel sliderPanel = new JPanel(new BorderLayout());
+        ramUsageSlider = new JSlider(0, 100, 90);
+        ramUsageSlider.addChangeListener(e -> calculateRamUsage());
+        sliderPanel.add(ramUsageSlider, BorderLayout.CENTER);
+
+        ramUsageLabel = new JLabel("90%");
+        sliderPanel.add(ramUsageLabel, BorderLayout.EAST);
+
+        add(new JLabel("RAM Usage (%):"));
+        add(sliderPanel);
+        /////////////
         // Added space
+        add(new JLabel());
         add(new JLabel());
         add(new JLabel("Health:"));
         healthLabel = new JLabel();
@@ -94,6 +109,16 @@ public class CouchbaseSizer extends JFrame {
         });
         add(calculateButton);
 
+
+      /*  // Create a new panel with BoxLayout for the button
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        buttonPanel.add(Box.createHorizontalGlue());
+        buttonPanel.add(calculateButton);
+        buttonPanel.add(Box.createHorizontalGlue());
+
+        // Add the button panel to the main layout
+        add(buttonPanel);*/
     }
 
     private void calculateRamUsage() {
@@ -109,12 +134,15 @@ public class CouchbaseSizer extends JFrame {
             if (ramUsageSlider.getValue() <= 50) {
                 healthLabel.setText("Healthy");
                 healthLabel.setForeground(new Color(0, 100, 0)); // Dark green
+                ramUsageLabel.setForeground(new Color(0, 100, 0)); // Dark green
             } else if (ramUsageSlider.getValue() <= 80) {
                 healthLabel.setText("Warning");
                 healthLabel.setForeground(new Color(255, 140, 0)); // Deep orange
+                ramUsageLabel.setForeground(new Color(255, 140, 0)); // Deep orange
             } else {
                 healthLabel.setText("Critical");
                 healthLabel.setForeground(Color.RED);
+                ramUsageLabel.setForeground(Color.RED);
             }
         } catch (NumberFormatException e) {
             // Ignore the exception if the input fields are empty or not valid numbers
