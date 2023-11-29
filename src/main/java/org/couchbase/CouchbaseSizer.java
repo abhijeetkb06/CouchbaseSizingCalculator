@@ -15,6 +15,8 @@ public class CouchbaseSizer extends JFrame {
     private JTextField desiredRamUsageField; // New field for Desired RAM Usage %
     private JTextField moreNodesForDesiredRamField; // New field for More Nodes For Desired RAM Usage %
 
+    private JButton clearButton; // New button for clearing fields
+
     public CouchbaseSizer() {
 
         setTitle("Couchbase Node Advisor");
@@ -77,6 +79,10 @@ public class CouchbaseSizer extends JFrame {
 
         // New button for calculating additional nodes
         JButton calculateButton = new JButton("Analyze Node Adjustment");
+        calculateButton.setBorder(BorderFactory.createRaisedBevelBorder());
+        calculateButton.setBackground(Color.lightGray); // Set the background color to red
+        calculateButton.setOpaque(true); // Needed for MacOS
+        calculateButton.setBorderPainted(false); // Needed for MacOS
         calculateButton.setFont(new Font("Arial", Font.PLAIN, 14)); // Set the font to Arial Bold
         calculateButton.addActionListener(new ActionListener() {
             @Override
@@ -85,6 +91,22 @@ public class CouchbaseSizer extends JFrame {
             }
         });
         add(calculateButton);
+
+        // New button for clearing fields
+        clearButton = new JButton("Clear Fields");
+        clearButton.setBorder(BorderFactory.createRaisedBevelBorder());
+        clearButton.setBackground(Color.lightGray); // Set the background color to red
+        clearButton.setOpaque(true); // Needed for MacOS
+        clearButton.setBorderPainted(false); // Needed for MacOS
+        clearButton.setFont(new Font("Arial", Font.PLAIN, 14)); // Set the font to Arial Bold
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                desiredRamUsageField.setText("");
+                moreNodesForDesiredRamField.setText("");
+            }
+        });
+        add(clearButton);
     }
 
     private void calculateRamUsage() {
@@ -97,7 +119,7 @@ public class CouchbaseSizer extends JFrame {
 
             ramUsageLabel.setText(ramUsageSlider.getValue() + "%");
 
-            if (ramUsageSlider.getValue() <= 50) {
+            if (ramUsageSlider.getValue() <= 60) {
                 healthLabel.setText("Healthy");
                 healthLabel.setForeground(new Color(0, 100, 0)); // Dark green
                 ramUsageLabel.setForeground(new Color(0, 100, 0)); // Dark green
