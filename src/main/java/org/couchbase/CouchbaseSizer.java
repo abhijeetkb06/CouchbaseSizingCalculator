@@ -2,6 +2,8 @@ package org.couchbase;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CouchbaseSizer extends JFrame {
     private JSlider ramUsageSlider;
@@ -78,7 +80,20 @@ public class CouchbaseSizer extends JFrame {
 //        desiredRamUsageField.setText("50");
 //        moreNodesForDesiredRamField.setText("10");
 
+
+
         calculateRamUsage();
+
+        // New button for calculating additional nodes
+        JButton calculateButton = new JButton("Calculate Additional Nodes");
+        calculateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                calculateAdditionalNodes();
+            }
+        });
+        add(calculateButton);
+
     }
 
     private void calculateRamUsage() {
@@ -101,6 +116,21 @@ public class CouchbaseSizer extends JFrame {
                 healthLabel.setText("Critical");
                 healthLabel.setForeground(Color.RED);
             }
+        } catch (NumberFormatException e) {
+            // Ignore the exception if the input fields are empty or not valid numbers
+        }
+    }
+
+    // New method for calculating additional nodes
+    private void calculateAdditionalNodes() {
+        try {
+            double ramAllocatedPerNode = Double.parseDouble(ramAllocatedPerNodeField.getText());
+            int totalNodes = Integer.parseInt(totalNodesField.getText());
+            double currentRamUsage = Double.parseDouble(currentlyUsedRamPerNodeField.getText()) / ramAllocatedPerNode;
+            double targetRamUsage = Double.parseDouble(desiredRamUsageField.getText()) / 100.0;
+
+            int addMoreNodes = (int) Math.ceil((currentRamUsage - targetRamUsage) * totalNodes / targetRamUsage);
+            moreNodesForDesiredRamField.setText(String.valueOf(addMoreNodes));
         } catch (NumberFormatException e) {
             // Ignore the exception if the input fields are empty or not valid numbers
         }
