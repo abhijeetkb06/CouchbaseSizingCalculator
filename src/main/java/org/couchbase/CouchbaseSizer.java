@@ -17,22 +17,15 @@ public class CouchbaseSizer extends JFrame {
 
     public CouchbaseSizer() {
 
-        setTitle("Couchbase Cluster Sizer");
-//        setSize(600, 300); // Doubled width and height
-
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        setLayout(new GridLayout(9, 6, 15, 20)); // Added horizontal and vertical gaps
-//        setLayout(new FlowLayout((FlowLayout.TRAILING))); // Added horizontal and vertical gaps
+        setTitle("Couchbase Node Advisor");
 
         setSize(600, 700); // Adjust the size as needed
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS)); // Changed to BoxLayout
-
         setLayout(new GridLayout(9, 2, 10, 10)); // Changed to GridLayout with 9 rows and 2 columns
 
-        add(new JLabel("Currently Used RAM per Node (GB):"));
+        add(new JLabel("RAM Usage per Node (GB):"));
         currentlyUsedRamPerNodeField = new JTextField("236");
-        currentlyUsedRamPerNodeField.setEditable(true); // Make it non-editable
+        currentlyUsedRamPerNodeField.setEditable(false); // Make it non-editable
         currentlyUsedRamPerNodeField.setColumns(10);
         add(currentlyUsedRamPerNodeField);
 
@@ -42,20 +35,11 @@ public class CouchbaseSizer extends JFrame {
         ramAllocatedPerNodeField.setColumns(10);
         add(ramAllocatedPerNodeField);
 
-        add(new JLabel("Total Nodes:"));
+        add(new JLabel("Total Cluster Nodes (Data/Index):"));
         totalNodesField = new JTextField("36");
         totalNodesField.setEditable(true); // Make it non-editable
         totalNodesField.setColumns(10);
         add(totalNodesField);
-/////////////
-   /*     add(new JLabel("RAM Usage (%):"));
-        ramUsageSlider = new JSlider(0, 100, 90);
-        ramUsageSlider.addChangeListener(e -> calculateRamUsage());
-        add(ramUsageSlider);
-
-        ramUsageLabel = new JLabel("90%");
-        add(ramUsageLabel);*/
-
 
         // Create a new panel with BorderLayout
         JPanel sliderPanel = new JPanel(new BorderLayout());
@@ -66,41 +50,33 @@ public class CouchbaseSizer extends JFrame {
         ramUsageLabel = new JLabel("90%");
         sliderPanel.add(ramUsageLabel, BorderLayout.EAST);
 
-        add(new JLabel("RAM Usage (%):"));
+        add(new JLabel("Average RAM Utilization (%):"));
         add(sliderPanel);
-        /////////////
+
         // Added space
         add(new JLabel());
         add(new JLabel());
-        add(new JLabel("Health:"));
+        add(new JLabel("Cluster Health Status:"));
         healthLabel = new JLabel();
         add(healthLabel);
 
-        // New fields directly at the bottom
 
-
-        add(new JLabel("Desired RAM Usage (%):"));
+        add(new JLabel("Desired Average RAM Usage (%):"));
         desiredRamUsageField = new JTextField();
         desiredRamUsageField.setColumns(10);
         add(desiredRamUsageField);
 
 
-
-        add(new JLabel("Add More Nodes For Desired RAM Usage (%):"));
+        add(new JLabel("Total Node Adjustment(Data/Index):"));
         moreNodesForDesiredRamField = new JTextField();
         moreNodesForDesiredRamField.setColumns(10);
         add(moreNodesForDesiredRamField);
 
-        // Prepopulate the new fields
-//        desiredRamUsageField.setText("50");
-//        moreNodesForDesiredRamField.setText("10");
-
-
-
+        // Calculate the RAM usage
         calculateRamUsage();
 
         // New button for calculating additional nodes
-        JButton calculateButton = new JButton("Calculate Additional Nodes");
+        JButton calculateButton = new JButton("Analyze Node Adjustment");
         calculateButton.setFont(new Font("Arial", Font.PLAIN, 14)); // Set the font to Arial Bold
         calculateButton.addActionListener(new ActionListener() {
             @Override
@@ -109,17 +85,6 @@ public class CouchbaseSizer extends JFrame {
             }
         });
         add(calculateButton);
-
-
-      /*  // Create a new panel with BoxLayout for the button
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.add(Box.createHorizontalGlue());
-        buttonPanel.add(calculateButton);
-        buttonPanel.add(Box.createHorizontalGlue());
-
-        // Add the button panel to the main layout
-        add(buttonPanel);*/
     }
 
     private void calculateRamUsage() {
